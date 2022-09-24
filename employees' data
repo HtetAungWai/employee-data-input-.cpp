@@ -1,0 +1,166 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define NO 2
+
+struct Employee{
+    int acc_no=0;
+    char u_name[10];
+    char password[10];
+    float balance;
+}EMP[NO];
+
+int main(){
+    FILE*fptr;
+    if((fptr = fopen("test.txt","w+")) == NULL){
+        puts("File Cannot open");
+        exit(1);}
+    else {
+        for (int i = 0; i < NO; i++) {
+            printf("************************************\n");
+            printf("Please enter %d acc no:\n", i + 1);
+            scanf("%d", &EMP[i].acc_no);
+            printf("Please enter %d user name:\n", i + 1);
+            scanf("%s", EMP[i].u_name);
+            printf("Please enter %d password no:\n", i + 1);
+            scanf("%s", EMP[i].password);
+            printf("Please enter %d balance no:\n", i + 1);
+            scanf("%f", &EMP[i].balance);
+            fprintf(fptr , "%d%20s%20s%20.2f\n",EMP[i].acc_no ,EMP[i].u_name ,EMP[i].password, EMP[i].balance);
+            //printf("************************************\n");
+        }
+    }
+    fclose(fptr);
+    int choice;
+    printf("If you want to find data press 1 or to update press 2\n or press 3 to exit\n");
+    scanf("%d",&choice);
+if(choice==3){
+    exit ;
+}
+if(choice==1) {
+    char u_find[10];
+    printf("Please enter the username you want to find:\n");
+    scanf("%s", u_find);
+    printf("The data u want to find is %s\n", u_find);
+    int a = 0;
+    int value=0;
+    for (int a=0;a<NO;a++) {
+        printf("%s\n",EMP[a].u_name);
+        value=strcmp(u_find,EMP[a].u_name);
+       if(value==0){
+           printf("We found username %s\n acc no %d\n password %s\n balance %.2f", EMP[a].u_name, EMP[a].acc_no,
+                  EMP[a].password, EMP[a].balance);
+       }else{
+           printf("We cannot find\n");
+
+       }
+    }
+
+}if(choice==2) {
+        int update;
+        printf("If you want to update acc press 1, username press 2, password press 3,balance press 4");
+        scanf("%d", &choice);
+        int new_accno, accno;
+        switch (choice) {
+            case 1:
+                printf("Please enter the acc no u want to change:\n");
+                scanf("%d", &accno);
+                printf("Please enter the new one:\n");
+                scanf("%d", &new_accno);
+                for (int b = 0; b < NO; b++) {
+                    if (accno == EMP[b].acc_no) {
+                        printf("***");
+                        EMP[b].acc_no = new_accno;
+                    }
+                    if ((fptr = fopen("test.txt", "w+")) == NULL) {
+                        puts("File Cannot open");
+                        exit(1);
+                    } else {
+                        for (int c = 0; c < NO; c++) {
+                            fprintf(fptr, "%d%20s%20s%20.2f\n", EMP[c].acc_no, EMP[c].u_name, EMP[c].password,
+                                    EMP[c].balance);
+                        }
+                        fclose(fptr);
+                    }
+                }
+                break;
+            case 2:
+                char up_name_old[10];
+                char up_name_new[10];
+                int U_value;
+                printf("Please enter the old username :\n");
+                scanf("%s", up_name_old);
+                printf("Please enter the new username :\n");
+                scanf("%s", up_name_new);
+                for (int d = 0; d < NO; d++) {
+                    U_value = strcmp(up_name_old, EMP[d].u_name);
+                    if (U_value == 0) {
+                        strcpy(EMP[d].u_name, up_name_new);
+                    }
+                    if ((fptr = fopen("test.txt", "w+")) == NULL) {
+                        puts("File Cannot open");
+                        exit(1);
+                    } else {
+                        for (int e = 0; e < NO; e++) {
+                            fprintf(fptr, "%d%20s%20s%20.2f\n", EMP[e].acc_no, EMP[e].u_name, EMP[e].password,
+                                    EMP[e].balance);
+                        }
+                        fclose(fptr);
+                    }
+                }
+                break;
+            case 3:
+                char up_pass_old[10];
+                char up_pass_new[10];
+                int P_value;
+                printf("Please enter the old password :\n");
+                scanf("%s", up_pass_old);
+                printf("Please enter the new password :\n");
+                scanf("%s", up_pass_new);
+                for (int d = 0; d < NO; d++) {
+                    U_value = strcmp(up_pass_old, EMP[d].password);
+                    if (U_value == 0) {
+                        strcpy(EMP[d].password, up_pass_new);
+                    }
+                    if ((fptr = fopen("test.txt", "w+")) == NULL) {
+                        puts("File Cannot open");
+                        exit(1);
+                    } else {
+                        for (int e = 0; e < NO; e++) {
+                            fprintf(fptr, "%d%20s%20s%20.2f\n", EMP[e].acc_no, EMP[e].u_name, EMP[e].password,
+                                    EMP[e].balance);
+                        }
+                        fclose(fptr);
+                    }
+                }
+                break;
+            case 4:
+                char U_balanace[10];
+                float New_balance;
+                printf("Please enter the username:\n");
+                scanf("%s", U_balanace);
+                printf("Please enter the new balance\n");
+                scanf("%f", &New_balance);
+                for (int d = 0; d < NO; d++) {
+                    U_value = strcmp(U_balanace, EMP[d].u_name);
+                    if (U_value == 0) {
+                        EMP[d].balance = New_balance;
+                    }
+                    if ((fptr = fopen("test.txt", "w+")) == NULL) {
+                        puts("File Cannot open");
+                        exit(1);
+                    } else {
+                        for (int c = 0; c < NO; c++) {
+                            fprintf(fptr, "%d%20s%20s%20.2f\n", EMP[c].acc_no, EMP[c].u_name, EMP[c].password,
+                                    EMP[c].balance);
+                        }
+                        fclose(fptr);
+                    }
+                }
+                break;
+        }
+    }
+
+    fclose(fptr);
+    return 0;
+}
